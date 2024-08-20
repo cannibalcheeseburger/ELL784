@@ -11,6 +11,7 @@ numpy = "*"
 tensorflow = "*"
 scikit-learn = "*"
 tensorflow-datasets = "*"
+tqdm = "*"
 
 [dev-packages]
 
