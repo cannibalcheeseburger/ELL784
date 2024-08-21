@@ -1,10 +1,9 @@
 import numpy as np
 import pandas as pd
-from dense import Dense
-from activations import Sigmoid
-from losses import mse, mse_prime
-from network import train
-from network import predict
+from NeuralNetwork.dense import Dense
+from NeuralNetwork.activations import Sigmoid
+from NeuralNetwork.losses import mse, mse_prime
+from NeuralNetwork.network import train,predict
 from tqdm import tqdm
 
 for INPUT in range(1,5):
