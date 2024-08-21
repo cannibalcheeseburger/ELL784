@@ -6,7 +6,7 @@ from NeuralNetwork.losses import mse, mse_prime
 from NeuralNetwork.network import train,predict
 from tqdm import tqdm
 
-for INPUT in range(1,5):
+for INPUT in range(4,5):
     def encode(output):
         if output>0.5:
             return 1
