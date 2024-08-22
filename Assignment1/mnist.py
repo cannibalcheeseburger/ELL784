@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from NeuralNetwork.dense import Dense
 from NeuralNetwork.activations import Sigmoid,Softmax
-from NeuralNetwork.losses import mse, mse_prime
+from NeuralNetwork.losses import mse, mse_derive
 from NeuralNetwork.network import predict
 from tqdm import tqdm
 
@@ -19,44 +19,44 @@ NN = [Dense(784,200),
       ]
 
 
-def train(network, loss, loss_prime, x_train, y_train,x_test,y_test, epochs = 1000, learning_rate = 0.01, verbose = True):
+def train(NN, loss, loss_derive, X, Y,x_test,y_test, epoch, alpha, verbose = True):
     error_TS = []
     acc_TS = []
     val_error_TS = []
     val_acc_TS = []
-    for e in range(epochs):
-        error = 0
+    for e in range(epoch):
+        errors= 0
         acc =0
         val_error = 0
         val_acc = 0
-        for x, y in zip(x_train, y_train):
+        for x, y in zip(X, Y):
             # forward
-            output = predict(network, x)
-            if np.argmax(y)==np.argmax(output):
+            out = predict(NN, x)
+            if np.argmax(y)==np.argmax(out):
                 acc+=1
             # error
 
-            error += loss(y, output)
+            errors+= loss(y, out)
 
             # backward
-            grad = loss_prime(y, output)
-            for layer in reversed(network):
-                grad = layer.backward(grad, learning_rate)
+            gradient = loss_derive(y, out)
+            for layer in reversed(NN):
+                gradient = layer.backward(gradient, alpha)
 
         for x, y in zip(x_test, y_test):
-            output = predict(network, x)
-            if np.argmax(y)==np.argmax(output):
+            output = predict(NN, x)
+            if np.argmax(y)==np.argmax(out):
                 val_acc+=1
-            val_error += loss(y, output)
+            val_error += loss(y, out)
         
-        error /= len(x_train)
-        acc /=len(x_train)
+        errors/= len(X)
+        acc /=len(X)
         val_error /= len(x_test)
         val_acc /=len(x_test)
 
         if verbose:
-            print(f"{e + 1}/{epochs}, error={round(error,4)}, accuracy={round(acc,4)}, val_error={round(val_error,4)}, val_accuracy={round(val_acc,4)}")
-        error_TS.append(error)
+            print(f"{e + 1}/{epoch}, error={round(errors,4)}, accuracy={round(acc,4)}, val_error={round(val_error,4)}, val_accuracy={round(val_acc,4)}")
+        error_TS.append(errors)
         acc_TS.append(acc)
         val_error_TS.append(val_error)
         val_acc_TS.append(val_acc)
@@ -74,7 +74,7 @@ Y_out = np.squeeze(np.eye(10)[Y_test])
 Y_out = np.reshape(Y_out,Y_out.shape +(1,))
 
 
-metrics = train(NN, mse, mse_prime, x_train=X_in,y_train=Y_in,x_test=X_out,y_test=Y_out, epochs=EPOCHS, learning_rate=ALPHA)
+metrics = train(NN, mse, mse_derive, X=X_in,Y=Y_in,x_test=X_out,y_test=Y_out, epoch=EPOCHS, alpha=ALPHA)
 
 metrics_names = ['Training Loss','Training Accuracy','Test Loss','Test Accuracy']
 for i in range(len(metrics_names)):

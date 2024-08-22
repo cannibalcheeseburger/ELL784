@@ -2,11 +2,11 @@ import numpy as np
 import pandas as pd
 from NeuralNetwork.dense import Dense
 from NeuralNetwork.activations import Sigmoid
-from NeuralNetwork.losses import mse, mse_prime
+from NeuralNetwork.losses import mse, mse_derive
 from NeuralNetwork.network import train,predict
 from tqdm import tqdm
 
-for INPUT in range(4,5):
+for INPUT in range(1,5):
     def encode(output):
         if output>0.5:
             return 1
@@ -25,7 +25,7 @@ for INPUT in range(4,5):
         NN.append(Dense(next_in, 1))
         NN.append(Sigmoid())
 
-        train(NN, mse, mse_prime, x_train=X_in,y_train=Y_in, epochs=10000, learning_rate=0.08,verbose=False)
+        train(NN, mse, mse_derive, X=X_in,Y=Y_in, epoch=10000, alpha=0.08,verbose=False)
         for x, y in zip(X_in, Y_in):
             output = predict(NN, x)
             if encode(output)!=y:

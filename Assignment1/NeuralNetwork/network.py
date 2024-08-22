@@ -1,37 +1,38 @@
 import numpy as np 
-def predict(network, input):
-    output = input
-    for layer in network:
-        output = layer.forward(output)
-    return output
+
+def predict(NN, input):
+    out = input
+    for n in NN:
+        out = n.forward(out)
+    return out
 
 
 
-def train(network, loss, loss_prime, x_train, y_train, epochs = 1000, learning_rate = 0.01, verbose = True):
+def train(NN, loss, loss_derive, X, Y, epoch, alpha, verbose = True):
     error_TS = []
     acc_TS = []
-    for e in range(epochs):
-        error = 0
-        acc =0
-        for x, y in zip(x_train, y_train):
+    for e in range(epoch):
+        errors = 0
+        acc = 0
+        for x, y in zip(X, Y):
             # forward
-            output = predict(network, x)
+            out = predict(NN, x)
 
-            if y==output:
+            if y==out:
                 acc+=1
             # error
 
-            error += loss(y, output)
+            errors += loss(y, out)
 
             # backward
-            grad = loss_prime(y, output)
-            for layer in reversed(network):
-                grad = layer.backward(grad, learning_rate)
+            gradient = loss_derive(y, out)
+            for layer in reversed(NN):
+                gradient = layer.backward(gradient, alpha)
 
-        error /= len(x_train)
-        acc /=len(x_train)
+        errors /= len(X)
+        acc /=len(X)
         if verbose:
-            print(f"{e + 1}/{epochs}, error={error}, accuracy={acc}")
-        error_TS.append(error)
+            print(f"{e + 1}/{epoch}, Train_error={errors}, Train_accuracy={acc}")
+        error_TS.append(errors)
         acc_TS.append(acc)
     return error_TS,acc_TS
