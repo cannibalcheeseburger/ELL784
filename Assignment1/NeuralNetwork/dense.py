@@ -1,9 +1,9 @@
 import numpy as np
 
 class Dense():
-    def __init__(self, input_size, output_size):
-        self.weights = np.random.randn(output_size, input_size)
-        self.bias = np.random.randn(output_size, 1)
+    def __init__(self, in_size, out_size):
+        self.weights = np.random.randn(out_size, in_size)
+        self.bias = np.random.randn(out_size, 1)
 
     def forward(self, input):
         self.input = input
