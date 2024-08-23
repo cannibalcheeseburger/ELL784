@@ -108,5 +108,5 @@ for alpha in ALPHA:
         plt.savefig("./graph/MNIST_{}_{}.png".format(metrics_names[i],alpha))
         plt.clf()
     
-with open('Export','rb') as f:
+with open('Export','wb') as f:
     pickle.dump(export,f)
