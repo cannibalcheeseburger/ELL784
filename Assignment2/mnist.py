@@ -8,7 +8,7 @@ from NeuralNetwork.network import predict
 from tqdm import tqdm
 import pickle
 
-EPOCHS = 80
+EPOCHS = 1
 ALPHA = [0.002,0.008,0.03,0.08,0.2]
 
 def k_fold(X,Y,k,set_fold):
@@ -99,8 +99,11 @@ for alpha in ALPHA:
         Softmax()
         ]
     metrics = train(NN, mse, mse_derive, X=X_in,Y=Y_in, epoch=EPOCHS, alpha=alpha,k=10)
+    test_error,test_acc = testModel(NN,mse,X_test,Y_test)
+    metrics.append(test_error)
+    metrics.append(test_acc)
     export[str(alpha)] = metrics
-    metrics_names = ['Training Loss','Training Accuracy','Test Loss','Test Accuracy']
+    metrics_names = ['Training Loss','Training Accuracy','Validation Loss','Validation Accuracy',"Test Loss","Test Accuracy"]
     for i in range(len(metrics_names)):
         plt.plot(metrics[i])
         plt.xlabel("Epochs")
