@@ -8,7 +8,7 @@ from NeuralNetwork.network import predict
 from tqdm import tqdm
 import pickle
 
-EPOCHS = 1
+EPOCHS = 90
 ALPHA = [0.002,0.008,0.03,0.08,0.2]
 
 def k_fold(X,Y,k,set_fold):
