@@ -12,6 +12,7 @@ tensorflow = "*"
 scikit-learn = "*"
 tensorflow-datasets = "*"
 tqdm = "*"
+rasterio = "*"
 
 [dev-packages]
 

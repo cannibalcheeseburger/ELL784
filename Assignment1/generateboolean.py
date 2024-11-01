@@ -46,5 +46,5 @@ for INPUTS in range(1,5):
     print(df)
 
     # Dump the DataFrame to a CSV file
-    df.to_csv('./boolean/Inputs'+str(INPUTS)+'_new.csv',index=False)
+    df.to_csv('./boolean/Inputs'+str(INPUTS)+'.csv',index=False)
 

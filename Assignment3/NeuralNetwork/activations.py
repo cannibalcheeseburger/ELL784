@@ -3,6 +3,8 @@ import numpy as np
 class Sigmoid():
     def __init__(self):
         def sigmoid(z):
+            z = np.clip(z, -100, 100)
+
             sig = 1 + np.exp(-z)
             return 1 / sig
 
@@ -21,13 +23,13 @@ class Sigmoid():
         return np.multiply(output_grad, self.activation_prime(self.input))
 
 
-class reLU():
+class ReLU():
     def __init__(self):
         def reLU(x):
             return np.maximum(0,x)
 
         def reLU_prime(x):
-            return x>0
+            return (x>0)*1
         
         self.activation = reLU
         self.activation_prime = reLU_prime
@@ -46,7 +48,8 @@ class Softmax():
         self.output = None
 
     def forward(self, inp):
-        tmp = np.exp(inp)
+        tmp = inp - np.max(inp)
+        tmp = np.exp(tmp)
         self.output = tmp / np.sum(tmp)
         return self.output
     

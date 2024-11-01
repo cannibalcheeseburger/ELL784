@@ -45,9 +45,9 @@ def train(NN, loss, loss_derive, X, Y,x_test,y_test, epoch, alpha, verbose = Tru
 
         for x, y in zip(x_test, y_test):
             output = predict(NN, x)
-            if np.argmax(y)==np.argmax(out):
+            if np.argmax(y)==np.argmax(output):
                 val_acc+=1
-            val_error += loss(y, out)
+            val_error += loss(y, output)
         
         errors/= len(X)
         acc /=len(X)
