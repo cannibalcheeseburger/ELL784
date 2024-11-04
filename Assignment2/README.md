@@ -18,5 +18,5 @@ Trains ANN on different Alpha values and stores the final results in 'Export' fi
 
 Creates a Growing tree-type neural network and trains/tests it on MNIST dataset.
 
-'python treeNN.py'
+'python treenn.py'
 
